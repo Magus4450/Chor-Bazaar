@@ -56,13 +56,13 @@
     
     .remove-space {
         float: right !important;
-        margin-left: 30rem !important;
+        margin-left: 25rem !important;
         color: white !important;
         font-size: 14px !important;
     }
     .remove-space1 {
         float: right !important;
-        margin-left: 18rem !important;
+        margin-left: 15rem !important;
         color: white !important;
         font-size: 14px !important;
     }
@@ -78,9 +78,7 @@
         font-size: 14px;
         margin-right: 50px;
     }
-    .search{
-        width: auto;
-    }
+   
 }
 
 /* Phone */

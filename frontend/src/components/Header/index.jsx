@@ -37,11 +37,11 @@ const Header = () => {
                 
                         <Nav.Link className="remove-space1">
                         <div className="search">
-      <div className="searchInputs">
+      <div className="searchInputs" >
         <input
           type="text"
           placeholder="Search"
-        
+        style={{width: '300px'}}
         />
         <div className="searchIcon">
 
