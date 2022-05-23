@@ -2,7 +2,7 @@ from rest_framework import generics
 from .models import Product
 from .serializers import ProductSerializer
 from rest_framework import mixins, permissions
-from .permissions import IsStaffEditorPermission
+from .permissions import IsStaffEditorPermission, IsProductofSeller
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
@@ -29,12 +29,13 @@ class ProductCreateAPIView(generics.CreateAPIView):
     serializer_class = ProductSerializer
 
     authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
 
 
 
     # Implement more logic when it is being created
     def perform_create(self, serializer):
-        serializer.save(seller=self.request.user)
+        # serializer.save(seller=self.request.user)
         return super().perform_create(serializer)
 
 class ProductListAPIView(generics.ListAPIView):
@@ -48,6 +49,8 @@ class ProductUpdateAPIView(generics.UpdateAPIView):
     lookup_field = 'pk'
 
     authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated, IsProductofSeller]
+
 
     
     # def perform_update(self, serializer):
@@ -59,6 +62,8 @@ class ProductDeleteAPIView(generics.DestroyAPIView):
     lookup_field = 'pk'
 
     authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated, IsProductofSeller, permissions.IsAdminUser]
+
 
 
     # def perform_destroy(self, instance):
