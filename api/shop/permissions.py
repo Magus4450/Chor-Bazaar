@@ -1,3 +1,4 @@
+from django import views
 from rest_framework import permissions
 
 class IsStaffEditorPermission(permissions.DjangoModelPermissions):
@@ -18,7 +19,17 @@ class IsStaffEditorPermission(permissions.DjangoModelPermissions):
     #         return False
     #     return super().has_permission(request, view)
 
+class IsProductofSeller(permissions.DjangoModelPermissions):
 
+    def has_permission(self, request, view):
+        # If the user is the seller of the product
+        if request.user.id == view.kwargs['pk']:
+            return True
+            
+        print(request.user.id)
+        print(view.kwargs['pk'])
+
+        return False
 
 
     # def has_permission(self, request, view):

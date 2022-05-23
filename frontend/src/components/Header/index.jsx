@@ -29,27 +29,26 @@ const Header = () => {
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto ">
                     
-                        <Nav.Link className="nav-cal">HOME</Nav.Link>
+                        <Nav.Link  className="nav-cal">HOME</Nav.Link>
        
                         <Nav.Link className="nav-cal">SHOP</Nav.Link>
                    
                         <Nav.Link className="nav-cal">DEALS</Nav.Link>
                 
                         <Nav.Link className="remove-space1">
+                        
                         <div className="search">
-      <div className="searchInputs" >
-        <input
-          type="text"
-          placeholder="Search"
-        style={{width: '300px'}}
-        />
-        <div className="searchIcon">
+                            <div className="searchInputs" >
+                                <input
+                                type="text"
+                                placeholder="Search"
+                                style={{width: '300px'}}
+                                />
+                        <div className="searchIcon">
 
-    
-        
-        </div>
-      </div>
-      </div>
+                        </div>
+                        </div>
+                     </div>
                         </Nav.Link>
           
                 

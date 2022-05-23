@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     # Third-Party Applications
     'rest_framework',
     'rest_framework.authtoken', # For sessions / token authentication
+    'rest_framework_simplejwt.token_blacklist', # For blacklisting tokens
 
     # Custom Applications
     'accounts',
@@ -132,9 +133,11 @@ from datetime import timedelta
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=2),
-    'ROTATE_REFRESH_TOKENS': False,
-    'BLACKLIST_AFTER_ROTATION': False,
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    # Creates new refresh tokens on every refresh
+    'ROTATE_REFRESH_TOKENS': True,
+    # Blacklist the old tokens when refreshing
+    'BLACKLIST_AFTER_ROTATION': True,
     'UPDATE_LAST_LOGIN': False,
 
     'ALGORITHM': 'HS256',

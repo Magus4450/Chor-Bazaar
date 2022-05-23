@@ -16,3 +16,6 @@ class Product(models.Model):
 
     def discounted_price(self):
         return self.price - (self.price * (self.discount/100)) 
+    
+    def __str__(self) -> str:
+        return f"{self.name} - {self.price}"
