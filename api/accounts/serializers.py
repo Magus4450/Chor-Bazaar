@@ -9,11 +9,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         # fields = ['email', 'password']
-<<<<<<< HEAD
-        fields = ['id', 'email', 'password', 'first_name', 'last_name', 'phone', 'gender', 'user_type']
-=======
         fields = ['id', 'email', 'password', 'password2', 'first_name', 'last_name', 'phone', 'gender', 'user_type', 'dob']
->>>>>>> b2200f5cab8ef374b323e03041d94467f20e43f1
     
     def create(self, validated_data):
         user = User.objects.create(
