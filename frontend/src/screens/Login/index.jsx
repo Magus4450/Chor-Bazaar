@@ -6,40 +6,44 @@ import {
     Row,
     Col
 } from 'react-bootstrap'
-// import { useDispatch, useSelector } from 'react-redux'
-// // import Message from '../Message/Message'
-// // import Loader from '../Loader/Loader'
+import { useDispatch, useSelector } from 'react-redux'
+import Message from '../../components/Message'
+
 import FormContainer from '../../components/FormContainer'
-// import { login } from '../../actions/userActions'
-// import Meta from '../Helmet/Meta'
+import { login } from '../../actions/userAction'
 
 const LoginComponent = ({ location, history }) => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [message, setMessage] = useState('')
 
-    // const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
-    // const userLogin = useSelector(state => state.userLogin)
-    // const { loading, userInfo, error } = userLogin
-    // const redirect = location.search ? location.search.split('=')[1] : '/'
+    const userLogin = useSelector(state => state.userLogin)
+    const { loading, userInfo, error } = userLogin
+    const redirect = location.search ? location.search.split('=')[1] : '/'
 
-    // useEffect(() => {
-    //     if (userInfo) {
-    //         history.push(redirect)
-    //     }
-    // }, [userInfo, history, redirect])
+    useEffect(() => {
+        console.log(userInfo)
+        if (userInfo) {
+            history.push("/home")
+        }else if(error){
+            setMessage("Email or Password doesn't match")
+        }
+    }, [userInfo, history, redirect, error])
 
     const submitHandler = (e) => {
         e.preventDefault()
-        // dispatch(login(email, password))
+        dispatch(login(email, password))
+      
     }
 
     return (
         <FormContainer>
            
             <h1 style={{ marginTop: '120px' }}>Sign In</h1>
-           
+            {message && <Message variant='danger'>{message}</Message>}
            
             <Form onSubmit={submitHandler}>
                 <Form.Group controlId='email'>

@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { useHistory } from 'react-router-dom'
+
 import{
     USER_LOGIN_FAIL,
     USER_LOGIN_REQUEST,
@@ -10,6 +12,7 @@ import{
 } from "../constants/userConstants"
 
 export const login = (email, password) => async (dispatch) => {
+
     try {
         dispatch({
             type: USER_LOGIN_REQUEST,
@@ -26,14 +29,16 @@ export const login = (email, password) => async (dispatch) => {
             { email, password },
             config
         )
-
+        console.log(data,'data');
         dispatch({
             type: USER_LOGIN_SUCCESS,
             payload: data
         })
 
         localStorage.setItem('userInfo', JSON.stringify(data))
+
     } catch (error) {
+        console.log(error,'e');
         dispatch({
             type: USER_LOGIN_FAIL,
             payload:
@@ -44,7 +49,7 @@ export const login = (email, password) => async (dispatch) => {
     }
 }
 
-export const register = (firstName, LastName, phone, email, password, gender, userType, dob ) => async (dispatch) => {
+export const register = (first_name, last_name, phone, email, password, password2, gender, user_type, dob ) => async (dispatch) => {
     try {
         dispatch({
             type: USER_REGISTER_REQUEST,
@@ -58,9 +63,10 @@ export const register = (firstName, LastName, phone, email, password, gender, us
 
         const { data } = await axios.post(
             'http://localhost:8000/api/accounts/register/',
-            { firstName, LastName, phone, email, password, gender, userType, dob },
+            { first_name, last_name, phone, email, password, password2, gender, user_type, dob },
             config
         )
+     
 
         dispatch({
             type: USER_REGISTER_SUCCESS,
@@ -72,7 +78,7 @@ export const register = (firstName, LastName, phone, email, password, gender, us
             payload: data
         })
 
-        localStorage.setItem('userInfo', JSON.stringify(data))
+    
     } catch (error) {
         dispatch({
             type: USER_REGISTER_FAIL,

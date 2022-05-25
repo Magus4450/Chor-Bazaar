@@ -15,15 +15,15 @@ import FormContainer from '../../components/FormContainer'
 
 const Register = ({ location, history }) => {
 
-    const [firstName, setFirstName] = useState('')
+    const [first_name, setFirstName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
-    const [lastName, setLastName] = useState('')
+    const [password2, setConfirmPassword] = useState('')
+    const [last_name, setLastName] = useState('')
     const [phone, setPhone] = useState('')
     const [gender, setGender] = useState('')
     const [dob, setDOB] = useState('')
-    const [userType, setUserType] = useState('')
+    const [user_type, setUserType] = useState('')
     const [message, setMessage] = useState(null)
 
     const dispatch = useDispatch()
@@ -38,14 +38,15 @@ const Register = ({ location, history }) => {
         }
     }, [userInfo, history, redirect])
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
 
   
         e.preventDefault()
-        if (password !== confirmPassword) {
+        if (password !== password2) {
             setMessage('Passwords do not match')
         } else {
-            dispatch(register(firstName, lastName, phone, email, password, gender, userType, dob))
+            await dispatch(register(first_name, last_name, phone, email, password, password2, gender, user_type, dob))
+            setMessage('Register Successfull')
         }
     
     }
@@ -59,9 +60,9 @@ const Register = ({ location, history }) => {
                         <Form.Group controlId='firstName'>
                             <Form.Label style={{ marginTop: '10px'}}>First Name <span style={{ color: 'red' }}>*</span></Form.Label>
                             <Form.Control
-                                type="name"
+                                type="text"
                                 placeholder="Enter first name"
-                                value={firstName}
+                                value={first_name}
                                 required
                                 onChange={(e) => setFirstName(e.target.value)}
                             ></Form.Control>
@@ -69,9 +70,9 @@ const Register = ({ location, history }) => {
                         <Form.Group controlId='lastName'>
                             <Form.Label style={{ marginTop: '10px'}}>Last Name<span style={{ color: 'red' }}>*</span></Form.Label>
                             <Form.Control
-                                type="lastName"
+                                type="text"
                                 placeholder="Enter last name"
-                                value={lastName}
+                                value={last_name}
                                 required
                                 onChange={(e) => setLastName(e.target.value)}
                             ></Form.Control>
@@ -109,9 +110,9 @@ const Register = ({ location, history }) => {
                         <Form.Group controlId='confirmPassword'>
                             <Form.Label style={{ marginTop: '10px'}}>Confirm Password<span style={{ color: 'red' }}>*</span></Form.Label>
                             <Form.Control
-                                type="confirmPassword"
+                                type="password"
                                 placeholder="Enter your password again"
-                                value={confirmPassword}
+                                value={password2}
                                 required
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                             ></Form.Control>
@@ -157,9 +158,9 @@ const Register = ({ location, history }) => {
                     setUserType(selectedUserType)
                 }}
                 >
-                    <option value="Male" > Buyer </option>
+                    <option value="Buyer" > Buyer </option>
                     
-                    <option value="Female" > Seller </option>
+                    <option value="Seller" > Seller </option>
 
 
                     </select>
