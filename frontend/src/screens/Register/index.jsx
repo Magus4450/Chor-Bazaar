@@ -6,8 +6,10 @@ import {
     Row,
     Col
 } from 'react-bootstrap'
-// import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
+import {register} from '../../actions/userAction'
+import Message from '../../components/Message'
 import FormContainer from '../../components/FormContainer'
 
 
@@ -20,39 +22,39 @@ const Register = ({ location, history }) => {
     const [lastName, setLastName] = useState('')
     const [phone, setPhone] = useState('')
     const [gender, setGender] = useState('')
-   
+    const [dob, setDOB] = useState('')
+    const [userType, setUserType] = useState('')
+    const [message, setMessage] = useState(null)
 
-    // const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
-    // const userRegister = useSelector(state => state.userRegister)
-    // const { loading, userInfo, error } = userRegister
-    // const redirect = location.search ? location.search.split('=')[1] : '/'
+    const userRegister = useSelector(state => state.userRegister)
+    const {userInfo } = userRegister
+    const redirect = location.search ? location.search.split('=')[1] : '/'
 
-    // useEffect(() => {
-    //     if (userInfo) {
-    //         history.push(redirect)
-    //     }
-    // }, [userInfo, history, redirect])
+    useEffect(() => {
+        if (userInfo) {
+            history.push(redirect)
+        }
+    }, [userInfo, history, redirect])
 
     const submitHandler = (e) => {
 
   
         e.preventDefault()
-    //     if (password !== confirmPassword) {
-    //         setMessage('Passwords do not match')
-    //     } else {
-    //         dispatch(register(name, email, password, cropSelection, fatherName, motherName, spouseName, gender, maritalStatus, country, address, province))
-    //     }
-    // }
+        if (password !== confirmPassword) {
+            setMessage('Passwords do not match')
+        } else {
+            dispatch(register(firstName, lastName, phone, email, password, gender, userType, dob))
+        }
+    
     }
 
     return (
 
         <FormContainer>
             <h1 style={{ marginTop: '120px' }}>Sign Up</h1>
-            {/* {message && <Message variant='danger'>{message}</Message>}
-            {error && <Message variant='danger'>{error}</Message>}
-            {loading && <Loader />} */}
+            {message && <Message variant='danger'>{message}</Message>}
             <Form onSubmit={submitHandler}>
                         <Form.Group controlId='firstName'>
                             <Form.Label style={{ marginTop: '10px'}}>First Name <span style={{ color: 'red' }}>*</span></Form.Label>
@@ -143,14 +145,47 @@ const Register = ({ location, history }) => {
                     </div>
 
                     </Form.Group>
+                    <Form.Group>
+                        <Form.Label style={{ marginTop: '10px'}}>Select UserType</Form.Label>
+
+                        <div className='container  p-1'>
+                <select Classname="custom select" 
+                 required
+                 style={{fontSize: 17, color: 'grey'}}
+                onChange={(e) => {
+                    const selectedUserType = e.target.value;
+                    setUserType(selectedUserType)
+                }}
+                >
+                    <option value="Male" > Buyer </option>
+                    
+                    <option value="Female" > Seller </option>
+
+
+                    </select>
+                    
+                    </div>
+
+                    </Form.Group>
                      
+                    <Form.Group controlId='dob'>
+                            <Form.Label style={{ marginTop: '10px'}}>Date of Birth <span style={{ color: 'red' }}>*</span></Form.Label>
+                            <Form.Control
+                                type="dob"
+                                placeholder="YYYY-MM-DD Format"
+                                value={dob}
+                                required
+                                onChange={(e) => setDOB(e.target.value)}
+                            ></Form.Control>
+                        </Form.Group>
+
                         <Button type="submit" variant="primary" style={{backgroundColor: "black", marginTop: '10px'}}>Register</Button>
                 
             </Form>
             
             <Row className='py-3'>
                 <Col style={{ marginBottom: '30px' }}>
-                    Have an Account? <Link to={'/'}>Login</Link>
+                    Have an Account?  <Link to={redirect ? `/?redirect=${redirect}` : '/'}>Login</Link>
                 </Col>
             </Row>
         </FormContainer>
