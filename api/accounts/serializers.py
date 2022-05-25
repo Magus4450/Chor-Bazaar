@@ -1,6 +1,6 @@
 
-from rest_framework import serializers, fields
-from .models import User
+from rest_framework import serializers
+from .models import Buyer, Seller, User
 
 class UserRegisterSerializer(serializers.ModelSerializer):
     # dob = fields.DateField(input_formats=['%Y-%m-%d'])
@@ -23,6 +23,16 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         )
         user.set_password(validated_data['password'])
         user.save()
+        if validated_data["user_type"] == "Buyer":
+            buyer = Buyer.objects.create(
+                user = user
+            )
+            buyer.save()
+        elif validated_data["user_type"] == "Seller":
+            seller = Seller.objects.create(
+                user = user
+            )
+            seller.save()
         return user
     
     def validate(self, attrs):
@@ -33,26 +43,19 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         return attrs
 
 
-from django.contrib.auth import authenticate
 
-# class UserLoginSerializer(serializers.Serializer):s
 
-#     class Meta:
-#         model = User
-#         fields = ['email', 'password']
 
-#     def validate(self, attrs):
-#         user = User.objects.filter(email=attrs["email"])
-#         if user is None:
-#             raise serializers.ValidationError(
-#                 {"email": "Email does not exist"}
-#             )
-#         user = authenticate(email=attrs["email"], password=attrs["password"])
-#         if user is None:
-#             raise serializers.ValidationError(
-#                 {"password": "Password is incorrect"}
-#             )
-#         return attrs
-        
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Add custom claims
+        token['id'] = user.id
+        # ...
+
+        return token
         
 
