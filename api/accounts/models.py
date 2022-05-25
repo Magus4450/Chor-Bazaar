@@ -27,9 +27,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     TYPE_CHOICES = {
         ('Buyer' ,'Buyer'),
-        ('Seller' ,'Seller')
+        ('Seller' ,'Seller'),
+        ('Admin', 'Admin')
     }
-    user_type = models.CharField(_("User Type"), max_length=10, choices=TYPE_CHOICES)
+    user_type = models.CharField(_("User Type"), max_length=10, choices=TYPE_CHOICES, default='Buyer')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
