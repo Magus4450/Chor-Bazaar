@@ -3,10 +3,21 @@ from django.utils.translation import ugettext_lazy as _
 from PIL import Image
 
 
+class Category(models.Model):
+    class Meta:
+        verbose_name = _("Category")
+        verbose_name_plural = _("Categories")
+
+    category = models.CharField(_("Category"), max_length=255)
+
+    def __str__(self) -> str:
+        return self.category
+
+
 class Product(models.Model):
 
     name = models.CharField(_("Name"), max_length=255)
-    category = models.CharField(_("Category"), max_length=255)
+    category = models.ManyToManyField(Category)
     price = models.FloatField(_("Price"))
     tags = models.CharField(_("Tags"), max_length=255)
     discount = models.FloatField(_("Discount"))
