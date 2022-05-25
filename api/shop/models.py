@@ -17,7 +17,7 @@ class Category(models.Model):
 class Product(models.Model):
 
     name = models.CharField(_("Name"), max_length=255)
-    category = models.ManyToManyField(Category)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     price = models.FloatField(_("Price"))
     tags = models.CharField(_("Tags"), max_length=255)
     discount = models.FloatField(_("Discount"))

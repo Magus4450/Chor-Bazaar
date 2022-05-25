@@ -1,6 +1,6 @@
 from rest_framework import generics
 from .models import Product, Category
-from .serializers import ProductSerializer, CategorySerializer
+from .serializers import ProductSerializer, CategorySerializer, ProductCreateSerializer
 from rest_framework import mixins, permissions
 from .permissions import IsStaffEditorPermission, IsProductofSeller
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -11,6 +11,12 @@ from accounts.models import Seller
 class ProductDetailAPIView(generics.RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    lookup_field = 'pk'
+
+
+class CategoryDetailAPIView(generics.RetrieveAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
     lookup_field = 'pk'
 
     # Uses session cookies to make sure user is logged in before accessing the API
@@ -26,7 +32,7 @@ class ProductDetailAPIView(generics.RetrieveAPIView):
 
 class ProductCreateAPIView(generics.CreateAPIView):
     queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+    serializer_class = ProductCreateSerializer
 
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
@@ -34,13 +40,30 @@ class ProductCreateAPIView(generics.CreateAPIView):
 
 
     # Implement more logic when it is being created
-    def perform_create(self, serializer):
-        serializer.save(seller=Seller.objects.get(pk=self.request.user.id))
-        return super().perform_create(serializer)
+    # def perform_create(self, serializer):
+    #     serializer.save(seller=Seller.objects.get(pk=self.request.user.id))
+    #     return super().perform_create(serializer)
 
 class ProductListAPIView(generics.ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+class ProductOwnedAPIView(generics.ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases
+        for the currently authenticated user.
+        """
+        user = self.request.user.id
+        seller = Seller.objects.get(user=user)
+        return Product.objects.filter(seller=seller.id)
+        
 
 class CategoryListAPIView(generics.ListAPIView):
     queryset = Category.objects.all()
