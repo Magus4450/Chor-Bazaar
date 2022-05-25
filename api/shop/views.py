@@ -1,6 +1,6 @@
 from rest_framework import generics
-from .models import Product
-from .serializers import ProductSerializer
+from .models import Product, Category
+from .serializers import ProductSerializer, CategorySerializer
 from rest_framework import mixins, permissions
 from .permissions import IsStaffEditorPermission, IsProductofSeller
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -41,6 +41,10 @@ class ProductCreateAPIView(generics.CreateAPIView):
 class ProductListAPIView(generics.ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+class CategoryListAPIView(generics.ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
     
 class ProductUpdateAPIView(generics.UpdateAPIView):
