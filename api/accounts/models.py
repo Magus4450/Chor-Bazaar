@@ -23,7 +23,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         ('Other', 'Other')
     }
     gender = models.CharField(_("Gender"), choices = GENDER_CHOICES, max_length=10)
-    # dob = models.DateField(_("Date of Birth"))
+    dob = models.DateField(_("Date of Birth"))
 
     TYPE_CHOICES = {
         ('Buyer' ,'Buyer'),
