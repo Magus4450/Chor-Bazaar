@@ -1,14 +1,17 @@
 import React from 'react'
+import SliderComponent from '../../components/Slider'
 
 
 
 
 
 const Home = ({ location, history }) => {
-const nothing = "nothing";
+
 
     return (
-       <h1>This is Homepage</h1>
+       <>
+        <SliderComponent />
+       </>
     )
 }
 

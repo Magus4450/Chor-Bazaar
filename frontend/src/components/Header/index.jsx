@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { LinkContainer } from "react-router-bootstrap";
+
 
 import { Nav, Navbar, NavDropdown, Image } from "react-bootstrap";
 import "./Header.css";
@@ -29,8 +29,15 @@ const Header = () => {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto ">
           <Nav.Link className="nav-cal">HOME</Nav.Link>
-
-          <Nav.Link className="nav-cal">SHOP</Nav.Link>
+          
+          {userInfo ? (
+            <>
+            <Nav.Link className="nav-cal">Sell Product</Nav.Link>
+            </>
+          ):(
+            <Nav.Link className="nav-cal">SHOP</Nav.Link>
+          )}
+         
 
           <Nav.Link className="nav-cal">DEALS</Nav.Link>
 
@@ -59,11 +66,16 @@ const Header = () => {
               </Nav.Link>
             </>
           ) : (
-            <a href="/login">
-              <Nav.Link className="nav-cal" to="/login">
-                LOGIN
+            
+               <Nav.Link className="nav-cal" >
+              
+                 LOGIN
+               
+                
               </Nav.Link>
-            </a>
+            
+             
+         
           )}
         </Nav>
       </Navbar.Collapse>

@@ -27,7 +27,7 @@ const LoginComponent = ({ location, history }) => {
     useEffect(() => {
         console.log(userInfo)
         if (userInfo) {
-            history.push("/home")
+            history.push("/")
         }else if(error){
             setMessage("Email or Password doesn't match")
         }
