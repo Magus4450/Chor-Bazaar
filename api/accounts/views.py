@@ -5,10 +5,12 @@ from .models import User
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
-
+from rest_framework import generics
 
 from .serializers import MyTokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework import permissions
 
 # To add information in the JWT token > URLs in core/urls.py
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -42,5 +44,16 @@ class RegisterUserView(APIView):
         },
         status=status.HTTP_200_OK,)
 
+from .permissions import UserDetailPermission
+
+class UserDetailAPIView(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserRegisterSerializer
+    lookup_field = 'pk'
+
+    
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [UserDetailPermission]
 
 
+    

@@ -12,5 +12,9 @@ urlpatterns = [
 
     path('category/list/', views.CategoryListAPIView.as_view() , name='category_list'),
     path('category/<int:pk>/', views.CategoryDetailAPIView.as_view() , name='category_detail'),
+    path('category/<int:pk>/products/', views.CategoryProductListAPIView.as_view() , name='category_products'),
+    path('category/create/', views.CategoryCreateAPIView.as_view() , name='category_create'),
+    path('category/<int:pk>/update/', views.CategoryUpdateAPIView.as_view() , name='category_update'),
+    path('category/<int:pk>/delete/', views.CategoryDeleteAPIView.as_view() , name='category_delete'),
 
 ]
