@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../../components/Message'
 
 import FormContainer from '../../components/FormContainer'
+import { createProduct } from '../../actions/productAction'
 
 
 const SellProduct = ({ location, history }) => {
@@ -28,10 +29,15 @@ const SellProduct = ({ location, history }) => {
     const userLogin = useSelector(state => state.userLogin)
     const { loading, userInfo, error } = userLogin
     const redirect = location.search ? location.search.split('=')[1] : '/'
-
-    const submitHandler = (e) => {
+    useEffect(() => {
+        if (!userInfo) {
+            history.push(redirect)
+        }
+    }, [userInfo, history, redirect])
+    const submitHandler = async(e) => {
         e.preventDefault()
-    
+        await dispatch(createProduct(name,category,price,tags,discount,quantity,description))
+            setMessage('');
       
     }
 
@@ -103,7 +109,7 @@ const SellProduct = ({ location, history }) => {
                 onChange={(e) => {
                     const selectedCategory = e.target.value;
                    
-                    selectedCategory(selectedCategory)
+                    setCategory(selectedCategory)
                 }}
                 >
                     <option value={""}> Select Category  </option>

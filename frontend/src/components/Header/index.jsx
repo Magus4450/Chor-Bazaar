@@ -21,18 +21,18 @@ const Header = () => {
 
   return (
     <Navbar collapseOnSelect expand="lg" fixed="top">
-      <Navbar.Brand className="nav-cal">
+      <Navbar.Brand className="nav-cal" href="/">
         <Image width="80px" src="/logo.png" />
       </Navbar.Brand>
 
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto ">
-          <Nav.Link className="nav-cal">HOME</Nav.Link>
+          <Nav.Link className="nav-cal" href="/">HOME</Nav.Link>
           
           {userInfo ? (
             <>
-            <Nav.Link className="nav-cal">Sell Product</Nav.Link>
+            <Nav.Link className="nav-cal" href="/sell">Sell Product</Nav.Link>
             </>
           ):(
             <Nav.Link className="nav-cal">SHOP</Nav.Link>
@@ -66,13 +66,15 @@ const Header = () => {
               </Nav.Link>
             </>
           ) : (
-            
-               <Nav.Link className="nav-cal" >
+           
+          <Nav.Link className="nav-cal" href="/login">
               
-                 LOGIN
+              LOGIN
+            
+             
+           </Nav.Link>
+         
                
-                
-              </Nav.Link>
             
              
          

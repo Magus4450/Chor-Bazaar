@@ -36,7 +36,9 @@ export const login = (email, password) => async (dispatch) => {
         })
 
         localStorage.setItem('userInfo', JSON.stringify(data))
-
+        // const decoded = jwt.verify(token, "django-insecure-wofh_fg7^m#6uc4j+*=(eb*b^xb)!ji$=4(ksy+ci9l#dc=tb^");  
+        // var userId = decoded.id
+        // console.log(userId)  
     } catch (error) {
         console.log(error,'e');
         dispatch({
