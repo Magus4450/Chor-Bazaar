@@ -36,8 +36,10 @@ const SellProduct = ({ location, history }) => {
     }, [userInfo, history, redirect])
     const submitHandler = async(e) => {
         e.preventDefault()
+        console.log(userInfo.access);
         await dispatch(createProduct(name,category,price,tags,discount,quantity,description))
             setMessage('');
+
       
     }
 
@@ -114,17 +116,17 @@ const SellProduct = ({ location, history }) => {
                 >
                     <option value={""}> Select Category  </option>
 
-                    <option value="Clothing" >Clothing</option>
+                    <option value="1" >Clothing</option>
                     
-                    <option value="Electronic" > Electronic </option>
+                    <option value="2" > Electronic </option>
 
-                    <option value="Tools" > Tools </option>
+                    <option value="3" > Tools </option>
 
-                    <option value="Movies" > Movies </option>
+                    <option value="4" > Movies </option>
 
-                    <option value="Daily Appliances" > Daily Appliances </option>
+                    <option value="5" > Daily Appliances </option>
 
-                    <option value="Outdoor" > Outdoor </option>
+                    <option value="6" > Outdoor </option>
 
                     </select>
                     

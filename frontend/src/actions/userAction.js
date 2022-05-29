@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
+import jwt_decode from 'jwt-decode'
 
 import{
     USER_LOGIN_FAIL,
@@ -34,11 +35,13 @@ export const login = (email, password) => async (dispatch) => {
             type: USER_LOGIN_SUCCESS,
             payload: data
         })
-
-        localStorage.setItem('userInfo', JSON.stringify(data))
-        // const decoded = jwt.verify(token, "django-insecure-wofh_fg7^m#6uc4j+*=(eb*b^xb)!ji$=4(ksy+ci9l#dc=tb^");  
-        // var userId = decoded.id
-        // console.log(userId)  
+        const decoded = jwt_decode(data.refresh);  
+        console.log(decoded,'decoded')  
+        
+        const user_id = decoded.user_id
+        console.log(user_id);
+        
+        localStorage.setItem('userInfo', JSON.stringify({...data, user_id}))
     } catch (error) {
         console.log(error,'e');
         dispatch({
