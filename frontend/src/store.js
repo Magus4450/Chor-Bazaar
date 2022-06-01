@@ -4,16 +4,19 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import {
     userLoginReducer,
     userRegisterReducer,
+    userDetailsReducer
     
 } from './reducers/userReducers.js'
-import { productCreateReducer } from './reducers/productReducers.js'
+import { productCreateReducer, productListReducer } from './reducers/productReducers.js'
 
 
 
 const reducer = combineReducers({
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,
-    productCreate: productCreateReducer
+    productCreate: productCreateReducer,
+    productList: productListReducer,
+    userDetails: userDetailsReducer
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
