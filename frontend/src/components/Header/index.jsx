@@ -1,19 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { LinkContainer } from "react-router-bootstrap";
+
 
 import { Nav, Navbar, NavDropdown, Image } from "react-bootstrap";
 import "./Header.css";
 
-import { logout } from "../../actions/userAction";
+import { logout, getUserDetails} from "../../actions/userAction";
 import { Link, useHistory } from "react-router-dom";
 
 const Header = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const {userInfo} = useSelector((state) => state.userLogin);
+
+  
+  const {user} = useSelector((state) => state.userDetails);
+
+
+  useEffect( () => {
+
+    dispatch(getUserDetails(userInfo?.user_id));
+    
+  },[userInfo]);
+  console.log(userInfo,'userinfo');
+  console.log(user,"user");
+
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -21,18 +33,25 @@ const Header = () => {
 
   return (
     <Navbar collapseOnSelect expand="lg" fixed="top">
-      <Navbar.Brand className="nav-cal">
+      <Navbar.Brand className="nav-cal" href="/">
         <Image width="80px" src="/logo.png" />
       </Navbar.Brand>
 
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto ">
-          <Nav.Link className="nav-cal">HOME</Nav.Link>
+          <Nav.Link className="nav-cal" href="/">HOME</Nav.Link>
+          
+          {userInfo ? (
+            <>
+            <Nav.Link className="nav-cal" href="/sell">SELL PRODUCT</Nav.Link>
+            </>
+          ):(
+            <Nav.Link className="nav-cal">SHOP</Nav.Link>
+          )}
+         
 
-          <Nav.Link className="nav-cal">SHOP</Nav.Link>
-
-          <Nav.Link className="nav-cal">DEALS</Nav.Link>
+          <Nav.Link className="nav-cal" href='/products'>BUYER VIEW</Nav.Link>
 
           <Nav.Link className="remove-space1">
             <div className="search">
@@ -59,11 +78,18 @@ const Header = () => {
               </Nav.Link>
             </>
           ) : (
-            <a href="/login">
-              <Nav.Link className="nav-cal" to="/login">
-                LOGIN
-              </Nav.Link>
-            </a>
+           
+          <Nav.Link className="nav-cal" href="/login">
+              
+              LOGIN
+            
+             
+           </Nav.Link>
+         
+               
+            
+             
+         
           )}
         </Nav>
       </Navbar.Collapse>
