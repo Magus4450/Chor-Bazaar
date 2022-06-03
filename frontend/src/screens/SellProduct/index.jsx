@@ -11,12 +11,12 @@ import Message from '../../components/Message'
 
 import FormContainer from '../../components/FormContainer'
 import { createProduct } from '../../actions/productAction'
-
+import {listCategory} from '../../actions/categoryAction'
 
 const SellProduct = ({ location, history }) => {
 
     const [name, setName] = useState('')
-    const [category, setCategory] = useState('')
+    const [categorry, setCategory] = useState('')
     const [price, setPrice] = useState('')
     const [tags, settags] = useState('')
     const [discount, setDiscount] = useState('')
@@ -26,18 +26,23 @@ const SellProduct = ({ location, history }) => {
 
     const dispatch = useDispatch()
 
+    const {category} = useSelector((state) => state.categoryList);
     const userLogin = useSelector(state => state.userLogin)
     const { loading, userInfo, error } = userLogin
     const redirect = location.search ? location.search.split('=')[1] : '/'
+
+    
     useEffect(() => {
         if (!userInfo) {
             history.push(redirect)
+            dispatch(listCategory());
         }
     }, [userInfo, history, redirect])
+    console.log(category,'category');
     const submitHandler = async(e) => {
         e.preventDefault()
         console.log(userInfo.access);
-        await dispatch(createProduct(name,category,price,tags,discount,quantity,description))
+        await dispatch(createProduct(name,categorry,price,tags,discount,quantity,description))
             setMessage('');
 
       

@@ -8,6 +8,7 @@ import {
     
 } from './reducers/userReducers.js'
 import { productCreateReducer, productListReducer } from './reducers/productReducers.js'
+import { categoryDetailReducer, categoryListReducer, categoryProductReducer } from './reducers/categoryReducers.js'
 
 
 
@@ -16,7 +17,11 @@ const reducer = combineReducers({
     userRegister: userRegisterReducer,
     productCreate: productCreateReducer,
     productList: productListReducer,
-    userDetails: userDetailsReducer
+    userDetails: userDetailsReducer,
+
+    categoryList: categoryListReducer,
+    categoryDetail: categoryDetailReducer,
+    categoryProduct: categoryProductReducer
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

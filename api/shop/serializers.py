@@ -8,7 +8,7 @@ class ProductSerializer(serializers.ModelSerializer):
     discounted_price = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Product
-        fields = ('id', 'name', 'category', 'price', 'tags', 'discount', 'description', 'quantity', 'discounted_price', 'seller')
+        fields = ('id', 'name', 'category', 'price', 'tags', 'discount', 'description','image', 'quantity', 'discounted_price', 'seller')
 
     def get_discounted_price(self, obj):
         return obj.discounted_price()
@@ -17,7 +17,7 @@ class ProductCreateSerializer(serializers.ModelSerializer):
     discounted_price = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Product
-        fields = ('id', 'name', 'category', 'price', 'tags', 'discount', 'description', 'quantity', 'discounted_price')
+        fields = ('id', 'name', 'category', 'price', 'tags', 'discount', 'description','image', 'quantity', 'discounted_price')
 
 
     def get_discounted_price(self, obj):
@@ -32,6 +32,7 @@ class ProductCreateSerializer(serializers.ModelSerializer):
             tags = validated_data['tags'],
             discount = validated_data['discount'],
             description = validated_data['description'],
+            image = validated_data['image'],
             quantity = validated_data['quantity'],
             seller = Seller.objects.get(user=self.context['request'].user)
 

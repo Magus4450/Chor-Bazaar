@@ -16,6 +16,8 @@ const ProductScreen = () => {
     const productList = useSelector(state => state.productList)
     const { error, product } = productList
 
+    
+
     const [numberOfItems, setNumberOfItems] = useState(3);
 
     useEffect(() => {
