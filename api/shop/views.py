@@ -5,7 +5,8 @@ from rest_framework import mixins, permissions
 from .permissions import IsStaffEditorPermission, IsProductofSeller
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from accounts.models import Seller
-
+from rest_framework import status
+from rest_framework import filters
 
 ################################################################################################################################
 ################################################# Product Views ################################################################
@@ -29,6 +30,9 @@ class ProductCreateAPIView(generics.CreateAPIView):
 class ProductListAPIView(generics.ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('name', 'tags', 'description')
+    
 
 
 class CategoryProductListAPIView(generics.ListAPIView):
