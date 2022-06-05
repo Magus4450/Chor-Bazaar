@@ -4,10 +4,10 @@ import { Container, Row, Button, Alert } from 'react-bootstrap'
 import PurchaseProduct from '../../components/PurchaseProduct';
 import './Product.css'
 
-import Message from './../../components/Message';
+import Message from '../../components/Message';
 
 
-import { listProducts } from './../../actions/productAction.js'
+import { listProducts } from '../../actions/productAction.js'
 
 
 const ProductScreen = () => {
@@ -20,10 +20,7 @@ const ProductScreen = () => {
 
     const [numberOfItems, setNumberOfItems] = useState(3);
 
-    useEffect(() => {
-        dispatch(listProducts())
-      
-    }, [dispatch])
+ 
 
     const showMore = () => {
         if (numberOfItems + 3 <= product.length) {

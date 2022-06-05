@@ -9,7 +9,7 @@ import {
 
 } from '../constants/productConstants'
 
-export const createProduct = (name,category,price,tags,discount,quantity,description) => async (dispatch, getState) => {
+export const createProduct = (name,category,price,tags,discount,quantity,description,image) => async (dispatch, getState) => {
     try {
         dispatch({ type: PRODUCT_CREATE_REQUEST })
 
@@ -21,7 +21,7 @@ export const createProduct = (name,category,price,tags,discount,quantity,descrip
             },
         }
    
-        const { data } = await axios.post(`http://localhost:8000/api/shop/product/create/`, {name,category,price,tags,discount,quantity,description}, config)
+        const { data } = await axios.post(`http://localhost:8000/api/shop/product/create/`, {name,category,price,tags,discount,quantity,description,image}, config)
 
         dispatch({
             type: PRODUCT_CREATE_SUCCESS,

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import {
@@ -12,6 +13,8 @@ import Message from '../../components/Message'
 import FormContainer from '../../components/FormContainer'
 import { createProduct } from '../../actions/productAction'
 import {listCategory} from '../../actions/categoryAction'
+import axios from 'axios'
+
 
 const SellProduct = ({ location, history }) => {
 
@@ -23,10 +26,12 @@ const SellProduct = ({ location, history }) => {
     const [quantity, setQuantity] = useState('')
     const [description, setDescription] = useState('')
     const [message, setMessage] = useState('')
+    const [image, setImage] = useState('')
+    const [uploading, setUploading] = useState(false)
 
     const dispatch = useDispatch()
 
-    const {category} = useSelector((state) => state.categoryList);
+    const {category} = useSelector(state => state.categoryList);
     const userLogin = useSelector(state => state.userLogin)
     const { loading, userInfo, error } = userLogin
     const redirect = location.search ? location.search.split('=')[1] : '/'
@@ -34,19 +39,25 @@ const SellProduct = ({ location, history }) => {
     
     useEffect(() => {
         if (!userInfo) {
+           
             history.push(redirect)
-            dispatch(listCategory());
+           
         }
-    }, [userInfo, history, redirect])
-    console.log(category,'category');
+       
+        dispatch(listCategory());
+    }, [userInfo, history, redirect, dispatch])
+  
     const submitHandler = async(e) => {
         e.preventDefault()
         console.log(userInfo.access);
-        await dispatch(createProduct(name,categorry,price,tags,discount,quantity,description))
-            setMessage('');
-
-      
+        await dispatch(createProduct(name,categorry,price,tags,discount,quantity,description,image))
+            setMessage('');      
     }
+
+   
+
+   
+
 
     return (
         <FormContainer>
@@ -56,7 +67,7 @@ const SellProduct = ({ location, history }) => {
            
             <Form onSubmit={submitHandler}>
                 <Form.Group controlId='name'>
-                    <Form.Label style={{ marginTop: '10px'}}>Email Product Name<span style={{ color: 'red' }}>*</span></Form.Label>
+                    <Form.Label style={{ marginTop: '10px'}}>Product Name<span style={{ color: 'red' }}>*</span></Form.Label>
                     <Form.Control
                         type="name"
                         placeholder="Enter Product Name"
@@ -110,7 +121,7 @@ const SellProduct = ({ location, history }) => {
                         <Form.Label style={{ marginTop: '10px'}}>Select Category <span style={{ color: 'red' }}>*</span></Form.Label>
 
                         <div className='container  p-1'>
-                <select Classname="custom select" 
+                <select className="custom select" 
                  required
                  style={{fontSize: 17, color: 'grey'}}
                 onChange={(e) => {
@@ -121,17 +132,11 @@ const SellProduct = ({ location, history }) => {
                 >
                     <option value={""}> Select Category  </option>
 
-                    <option value="1" >Clothing</option>
-                    
-                    <option value="2" > Electronic </option>
-
-                    <option value="3" > Tools </option>
-
-                    <option value="4" > Movies </option>
-
-                    <option value="5" > Daily Appliances </option>
-
-                    <option value="6" > Outdoor </option>
+                    {
+                        category.map((category)=>(
+                            <option key={category.id} value= {category.id}>{category.category}</option>
+                        ))
+                    }
 
                     </select>
                     
@@ -149,8 +154,17 @@ const SellProduct = ({ location, history }) => {
                         onChange={(e) => setDescription(e.target.value)}
                     ></Form.Control>
                 </Form.Group>
+                <Form.Group controlId='image'>
+                            <Form.Label>Image <span style={{ color: 'red' }}>* </span></Form.Label>
+                            <input type="file" name="imageFile"   onChange={(e) => setImage(e.target.value)} style={{marginTop: '10px'}}></input>
+                           
+                            
+                        </Form.Group>
                 <Button type="submit" variant="primary" style={{ marginTop: '10px', backgroundColor:"black"}}>Sell</Button>
             </Form>
+
+            
+                       
            
         </FormContainer>
     )

@@ -20,7 +20,7 @@ const PurchaseProduct = ({ _id, name, image, price }) => {
                         <h4>RS.{price}</h4>
                     </Card.Text>
                   
-                        <Button className="btn-preview" varient="success" style={{backgroundColor:'black'}}>Preview here</Button>
+                        <Button className="btn-preview" varient="success" style={{backgroundColor:'black', right: '20px' }}>Preview here</Button>
                    
                 </Card.Body>
             </Card>
